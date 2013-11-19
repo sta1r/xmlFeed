@@ -30,8 +30,8 @@ if(class_exists('XMLFeed') != true) {
 			if (isset($this->origin)) {
 				if ($this->origin == 'news') {
 
-					if (!isset($this->collegeSlug)) {
-						die('You must supply a collegeSlug parameter with origin news e.g. fashion or lcc');
+					if (!isset($this->collegeSlug) || !isset($this->feedType) || !isset($this->slug)) {
+						echo '<p>Error: You must supply the following parameters with origin news: \'collegeSlug\', \'feedType\' and \'slug\'</p>';
 					}
 
 					$this->url = "http://blogs.arts.ac.uk/".$this->collegeSlug."/".$this->feedType."/".$this->slug."/feed/";
@@ -43,7 +43,7 @@ if(class_exists('XMLFeed') != true) {
 
 				}
 			} else {
-				die('You must supply a feed type e.g. news or research-outputs');
+				echo '<p>Error: You must set a feed origin e.g. news or research-outputs</p>';
 			}
 
 			// generate a fileName from supplied data
@@ -127,6 +127,26 @@ if(class_exists('XMLFeed') != true) {
 
 		public function noResults() {
 			echo "Your request returned no results";
+		}
+
+		public function do_output() {
+		
+			$xml = $this->xml;
+
+			if (!empty($xml)) {
+
+				foreach( $xml->channel->item as $item ) 
+				{ 
+					$this->do_item_loop($item); 
+
+				} 
+
+			} else {
+
+				$this->noResults();
+
+			}
+		
 		}
 		
 	}

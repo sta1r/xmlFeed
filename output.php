@@ -9,7 +9,7 @@ $news = new News( array(
 	'origin' => 'news', 
 	'feedType' => 'tag', 
 	'collegeSlug' => 'fashion', 
-	'slug' => 'inside-the-industry') 
+	'slug' => 'ma-fashion-photography') 
 );
 
 $research = new Research( array( 
